@@ -1,0 +1,546 @@
+server.js
+
+// Fetch results for a student and semester
+app.get('/results', (req, res) => {
+  const { studentId, semester } = req.query;
+
+  // Check if the result_status is 'published' for the given semester
+  const sqlCheckStatus = `SELECT result_status FROM course_create WHERE sem = ?`;
+  connection.query(sqlCheckStatus, [semester], (err, results) => {
+    if (err) {
+      console.error('Error checking result status:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (results.length === 0 || results[0].result_status !== 'published') {
+      res.json({ examTaken: false, message: 'Result not yet published for this semester.' });
+    } else {
+      // Prepare SQL query to fetch exam results
+      const sqlFetchResults = `SELECT * FROM result WHERE stid = ? AND class = ?`;
+
+      // Execute SQL query with parameters
+      connection.query(sqlFetchResults, [studentId, semester], (err, results) => {
+        if (err) {
+          console.error('Error fetching exam result:', err);
+          res.status(500).json({ error: 'Internal Server Error' });
+          return;
+        }
+
+        // Check if there is a result for the studentId and semester
+        const examTaken = results.length > 0;
+        res.json({ examTaken, results: results || [] });
+      });
+    }
+  });
+});
+
+resultview.js
+
+document.getElementById('resultForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    
+    const studentId = document.getElementById('studentId').value;
+    const semester = document.getElementById('semester').value;
+  
+    const response = await fetch(`/results?studentId=${studentId}&semester=${semester}`);
+    const data = await response.json();
+  
+    let resultsContainer = document.getElementById('results');
+  
+    if (!data.examTaken) {
+      resultsContainer.innerHTML = data.message || 'No results found.';
+      return;
+    }
+  
+    let correctAnswers = 0;
+    let wrongAnswers = 0;
+  
+    data.results.forEach(result => {
+      if (result.markscored === 1) correctAnswers++;
+      else wrongAnswers++;
+    });
+  
+    let totalMarks = correctAnswers;
+    let eligibility = totalMarks >= 25 ? 'Pass' : 'Fail';
+    let eligibilityClass = totalMarks >= 25 ? 'pass' : 'fail';
+  
+    resultsContainer.innerHTML = `<p>Total Correct Answers: ${correctAnswers}</p>
+                                  <p>Total Wrong Answers: ${wrongAnswers}</p>
+                                  <p>Total Marks Scored: ${totalMarks}</p>
+                                  <p class="eligibility ${eligibilityClass}">Eligibility: ${eligibility}</p>`;
+  });
+  
+
+facsignup.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup</title>
+  <link rel="stylesheet" type="text/css" href="/facsignup.css">
+  <title>Sign Up</title>
+</head>
+<body>
+  <div class="container-outer">
+    <div class="container-left">
+      <h1>Online Exam System</h1>
+    </div>
+    <div class="container-right">
+      <h1>Sign Up</h1>
+      <form id="signupForm" action="/facsignup" method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="department">Department:</label>
+        <input type="text" name="department" id="department" required>
+        <br>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" name="confirmPassword" id="confirm-password" required>
+        <br>
+        <button type="submit">Signup</button>
+        <p>Already have an account? <a href="faclogin.html">Log in</a></p>
+      </form>
+    </div>
+  </div>
+  <script src="/facsignup.js"></script>
+</body>
+</html>
+
+facsignup.js
+
+const form = document.querySelector('#signupForm');
+
+form.addEventListener('submit', (e) => {
+  // Prevent the form from submitting
+  e.preventDefault();
+
+  // Get the form data
+  const formData = new FormData(form);
+
+  // Convert FormData to JSON object
+  const jsonObject = {};
+  formData.forEach((value, key) => {
+    jsonObject[key] = value;
+  });
+
+  // Send a POST request to the server with the JSON data
+  fetch('/facsignup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json' // Set content type to JSON
+    },
+    body: JSON.stringify(jsonObject), // Convert JSON object to string
+  })
+  .then((response) => {
+    // If the response is successful, redirect the user to the login page
+    if (response.ok) {
+      window.location.href = 'faclogin.html';
+    } else {
+      // If the response is not successful, show an error message
+      const errorMessage = document.createElement('p');
+      errorMessage.textContent = 'An error occurred. Please try again.';
+      errorMessage.style.color = 'red';
+      form.insertBefore(errorMessage, form.firstChild);
+      setTimeout(() => {
+        errorMessage.remove();
+      }, 5000);
+    }
+  })
+  .catch((error) => {
+    // If there is an error with the request, show an error message
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'An error occurred. Please try again.';
+    errorMessage.style.color = 'red';
+    form.insertBefore(errorMessage, form.firstChild);
+    setTimeout(() => {
+      errorMessage.remove();
+    }, 5000);
+  });
+});
+
+
+facsignup.css
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+ 
+  body {
+    background-color: #9f9999;
+    margin: 0;
+    padding: 0;
+    background-image: url("exambg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-blend-mode:soft-light;
+  }
+
+  .container-outer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 50px auto;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: space-between;
+    background-image: url("exam.jpg");
+  background-size: cover;
+  background-position: center;
+  }
+  
+  .container-left {
+    flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-image: url("exam.jpg");
+  background-size: cover;
+  background-position: center;
+  }
+  
+  .container-left h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .container-left img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-right {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-right h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .container-right form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .container-right label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .container-right input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .container-right button {
+    padding: 10px;
+    background-color: #221e97;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .container-right button:hover {
+    background-color: #0c5baa;
+  }
+  
+  .container-right p {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .container-right p a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .container-right p a:hover {
+    text-decoration: underline;
+  }
+
+stusignup.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Signup</title>
+  <link rel="stylesheet" type="text/css" href="/stusignup.css">
+</head>
+<body>
+  <div class="container-outer">
+    <div class="container-left">
+      <h1>Online Exam System</h1>
+    </div>
+    <div class="container-right">
+      <h1>Student Sign Up</h1>
+      <form id="signupForm" action="/stusignup" method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" name="confirmPassword" id="confirm-password" required>
+        <br>
+        <label for="stdept">Department:</label>
+        <input type="text" name="stdept" id="stdept" required>
+        <br>
+        <label for="stemail">Email:</label>
+        <input type="email" name="stemail" id="stemail" required>
+        <br>
+        <button type="submit">Signup</button>
+        <p>Already have an account? <a href="stulogin.html">Log in</a></p>
+      </form>
+    </div>
+  </div>
+  <script src="/stusignup.js"></script>
+</body>
+</html>
+  
+stusignup.css
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+ 
+  body {
+    background-color: #9f9999;
+    margin: 0;
+    padding: 0;
+    background-image: url("exambg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-blend-mode:soft-light;
+  }
+
+  .container-outer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 50px auto;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: space-between;
+    background-image: url("exam.jpg");
+  background-size: cover;
+  background-position: center;
+  }
+  
+  .container-left {
+    flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-image: url("exam.jpg");
+  background-size: cover;
+  background-position: center;
+  }
+  
+  .container-left h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .container-left img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-right {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-right h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .container-right form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .container-right label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .container-right input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .container-right button {
+    padding: 10px;
+    background-color: #221e97;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .container-right button:hover {
+    background-color: #0c5baa;
+  }
+  
+  .container-right p {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .container-right p a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .container-right p a:hover {
+    text-decoration: underline;
+  }
+
+stusignup.js
+
+const form = document.querySelector('#signupForm');
+
+form.addEventListener('submit', (e) => {
+  // Prevent the form from submitting
+  e.preventDefault();
+
+  // Get the form data
+  const formData = new FormData(form);
+
+  // Convert FormData to JSON object
+  const jsonObject = {};
+  formData.forEach((value, key) => {
+    jsonObject[key] = value;
+  });
+
+  // Send a POST request to the server with the JSON data
+  fetch('/stusignup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json' // Set content type to JSON
+    },
+    body: JSON.stringify(jsonObject), // Convert JSON object to string
+  })
+  .then((response) => {
+    // If the response is successful, redirect the user to the login page
+    if (response.ok) {
+      window.location.href = 'stulogin.html';
+    } else {
+      // If the response is not successful, show an error message
+      const errorMessage = document.createElement('p');
+      errorMessage.textContent = 'An error occurred. Please try again.';
+      errorMessage.style.color = 'red';
+      form.insertBefore(errorMessage, form.firstChild);
+      setTimeout(() => {
+        errorMessage.remove();
+      }, 5000);
+    }
+  })
+  .catch((error) => {
+    // If there is an error with the request, show an error message
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'An error occurred. Please try again.';
+    errorMessage.style.color = 'red';
+    form.insertBefore(errorMessage, form.firstChild);
+    setTimeout(() => {
+      errorMessage.remove();
+    }, 5000);
+  });
+});
+
+server.js
+
+app.post('/facsignup', (req, res) => {
+  const { name, email, password, confirmPassword, department, username } = req.body;
+
+  // Check passwords match
+  if (password !== confirmPassword) {
+    res.send('Passwords do not match');
+    return;
+  }
+
+  const sql = 'INSERT INTO faculty (facname, fdept, fuser, femail, fpass) VALUES (?, ?, ?, ?, ?)';
+  connection.query(sql, [name, department, username, email, password], (err, result) => {
+    if (err) {
+      console.error('Error inserting into faculty:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send('Faculty registered successfully');
+  });
+});
+
+
+// Handle student signup
+app.post('/stusignup', (req, res) => {
+  const { name, username, password, confirmPassword, stdept, stemail } = req.body;
+
+  // Check passwords match
+  if (password !== confirmPassword) {
+    res.status(400).send('Passwords do not match');
+    return;
+  }
+
+  const sql = 'INSERT INTO student (stname, username, password, stdept, stemail) VALUES (?, ?, ?, ?, ?)';
+  connection.query(sql, [name, username, password, stdept, stemail], (err, result) => {
+    if (err) {
+      console.error('Error inserting into student:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    res.send('Student registered successfully');
+  });
+});
+

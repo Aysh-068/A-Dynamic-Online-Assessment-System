@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fcourse</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom CSS for additional styling */
+        .class-card {
+            margin-bottom: 20px;
+        }
+        body{
+            background-color: #9f9999;
+            margin:0px;
+             background-image: url("713.jpg");
+             background-size: cover;
+            
+             background-blend-mode:soft-light;
+            
+           }
+       
+            .header {
+  background-color: rgb(50, 35, 152);
+  margin-bottom: 0; /* Remove any existing bottom margin */
+}
+
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* This distributes the items evenly */
+        }
+
+        .add-class,
+        .delete-class,
+        .create-exam {
+            margin: 0 5px; /* Adjust the margin as needed */
+        }
+
+        /* Apply background color to buttons */
+        .btn-custom {
+            background-color: rgb(50, 35, 152);
+            color: rgb(170, 161, 209);
+            border: none;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        .btn-custom:hover {
+            background-color: rgba(50, 35, 152, 0.8); /* Slightly darken on hover */
+        }
+
+    </style>
+</head>
+<body> 
+    <header class="header text-white p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="search-bar mr-auto">
+               
+            </div>
+            <div class="button-container">
+                <div class="add-class">
+                    <a href="course_create.html" class="btn btn-custom"><i class="fas fa-plus"></i> Create Course</a>
+                </div>
+                <div class="delete-class">
+                    <a href="delcourse.html" class="btn btn-custom"><i class="fas fa-trash-alt"></i> Delete Course</a>
+                </div>
+               
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4" id="coursesContainer">
+        <!-- Courses will be dynamically added here -->
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="fcourse.js"></script>
+</body>
+</html>

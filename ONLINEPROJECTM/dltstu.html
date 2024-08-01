@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Student by ID</title>
+  <link rel="stylesheet" href="dltstu.css">
+</head>
+<body>
+  <div class="container">
+    <div class="taskbar">
+      <ul>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Search</a>
+          <div class="dropdown-content">
+             <a href="searchfac.html">Search Faculty by Name</a>
+             <a href="searchfacbydept.html">Search Faculty by Department</a>
+             <a href="searchstu.html">Search Student by Name</a>
+             <a href="searchstubyclass.html">Search Student by Class</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Delete</a>
+          <div class="dropdown-content">
+            <a href="dltfac.html">Delete Faculty</a>
+            <a href="dltstu.html">Delete Student</a>
+          </div>
+        </li>
+         <li class="dropdown"><a href="#" class="dropbtn">Display</a>
+         <div class="dropdown-content">
+            <a href="dispfac.html">Display Faculty</a>
+            <a href="dispstu.html">Display Student</a>
+          </div>
+        </li>
+         <li>
+          <a href="results.html" class="publish-btn">Publish Result</a>
+        </li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <h1>Delete Student by ID</h1>
+      <form action="/dltstu" method="post" id="deleteForm">
+        <label for="studentId">Student ID:</label>
+        <input type="number" id="studentId" name="studentId" required>
+        <button type="submit">Delete</button>
+      </form>
+      <div id="dltResults"></div>
+    </div>
+  </div>
+  <script src="dltstu.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+CREATE TABLE `admin` (
+   `id` int NOT NULL,
+   `name` varchar(50) DEFAULT NULL,
+   `password` varchar(50) DEFAULT NULL,
+   `username` varchar(255) NOT NULL,
+   `email` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE `course_create` (
+   `facultyname` varchar(20) DEFAULT NULL,
+   `coursename` varchar(20) DEFAULT NULL,
+   `department` varchar(20) DEFAULT NULL,
+   `faculty_id` int NOT NULL,
+   `course_id` varchar(50) NOT NULL,
+   `result_status` varchar(255) DEFAULT 'not published',
+   `sem` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`course_id`),
+   KEY `fk_faculty_id_new` (`faculty_id`)
+) ;
+
+CREATE TABLE `faculty` (
+   `fuser` varchar(20) DEFAULT NULL,
+   `fpass` varchar(20) DEFAULT NULL,
+   `faculty_id` int NOT NULL AUTO_INCREMENT,
+   `femail` varchar(255) DEFAULT NULL,
+   `fdept` varchar(50) DEFAULT NULL,
+   `facname` varchar(255) DEFAULT NULL,
+   `std_id` int DEFAULT NULL,
+   `question_order` int DEFAULT NULL,
+   PRIMARY KEY (`faculty_id`)
+) ;
+
+CREATE TABLE `qstn_bank` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `qstn_id` int DEFAULT NULL,
+   `qstn` varchar(255) DEFAULT NULL,
+   `op1` varchar(100) DEFAULT NULL,
+   `op2` varchar(100) DEFAULT NULL,
+   `op3` varchar(100) DEFAULT NULL,
+   `op4` varchar(100) DEFAULT NULL,
+   `course_id` varchar(50) DEFAULT NULL,
+   `faculty_id` int DEFAULT NULL,
+   `crct_ans` int DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `fk_course_id` (`course_id`),
+   KEY `fk_faculty` (`faculty_id`),
+   CONSTRAINT `fk_course_id` FOREIGN KEY (`course_id`)
+    REFERENCES `course_create` (`course_id`)  
+) ;
+CREATE TABLE `result` (
+   `resultid` int NOT NULL AUTO_INCREMENT,
+   `qstnid` int DEFAULT NULL,
+   `answerchoosen` varchar(150) DEFAULT NULL,
+   `markscored` int DEFAULT NULL,
+   `faculty_id` int DEFAULT NULL,
+   `class` varchar(50) DEFAULT NULL,
+   `stid` int DEFAULT NULL,
+   PRIMARY KEY (`resultid`),
+   KEY `fk_faculty_id_result` (`faculty_id`)
+);
+CREATE TABLE `student` (
+   `std_id` int NOT NULL AUTO_INCREMENT,
+   `username` varchar(20) DEFAULT NULL,
+   `password` varchar(20) DEFAULT NULL,
+   `stdept` varchar(50) DEFAULT NULL,
+   `stemail` varchar(255) NOT NULL,
+   `stname` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`std_id`)
+);
+
+
+

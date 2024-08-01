@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Exam</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+  <div id="studentInfoContainer">
+    <form id="studentInfoForm">
+      <label for="studentId">Student ID:</label>
+      <input type="text" id="studentId" name="studentId" required>
+      <label for="class">Class (e.g., S6/S8):</label>
+      <input type="text" id="class" name="class" required>
+      <button type="submit">Proceed</button>
+    </form>
+  </div>
+  <div id="examContainer" style="display: none;">
+    <h1>Online Exam</h1>
+    <div id="timer"></div>
+    <form id="examForm">
+      <div id="questionsContainer"></div>
+      <button type="submit" id="submitBtn">Submit</button>
+    </form>
+  </div>
+  <script src="exam.js"></script>
+</body>
+</html>

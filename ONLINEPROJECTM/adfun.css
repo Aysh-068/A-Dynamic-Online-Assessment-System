@@ -1,0 +1,93 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+    background-color: #9f9999;
+    background-image: url("713.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
+
+  }
+  
+  .taskbar {
+    width: 200px;
+    background-color: rgb(50, 35, 152);;
+    color: rgb(50, 35, 152);;
+    padding-top: 20px;
+  }
+  
+  .taskbar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .taskbar li {
+    padding: 10px;
+  }
+  
+  .taskbar a {
+    color: #fff;
+    font-size: 1.3rem;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .taskbar a:hover {
+    background-color: #333;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .dropdown {
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(44, 42, 60);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .main-content p {
+    font-size: 1.5rem;
+    color: rgb(5, 11, 131);
+  }
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #3d0f65;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  
+  

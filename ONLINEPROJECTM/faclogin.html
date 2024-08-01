@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/faclogin.css">
+</head>
+<body>
+  <div class="container-outer">
+      <div class="container-left">
+        <h1>Online Exam System</h1>
+        <h1>FACULTY LOGIN</h1>
+      </div>
+      <div class="container-right">
+      <form action="/login" method="post">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/facsignup">Sign Up</a></p>
+    <p id="errorMessage" class="error-message"></p>
+  </div>
+  </div>
+  <script src="faclogin.js"></script>
+</body>
+</html>

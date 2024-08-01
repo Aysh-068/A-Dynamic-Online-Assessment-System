@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="/adsignup.css">
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <div class="container-outer">
+      <div class="container-left">
+        <h1>Online Exam System</h1>
+      </div>
+      <div class="container-right">
+        <h1>Sign Up</h1>
+        <form action="/signup" method="post">
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" required>
+          <br>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" required>
+          <br>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" required>
+          <br>
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" name="confirmPassword" id="confirm-password" required>
+          <br>
+          <button type="submit">Signup</button>
+          <p>Already have an account? <a href="adminlogin.html">Log in</a></p>
+        </form>
+      </div>
+    </div>
+    <script src="/adsignup.js"></script>
+  </body>
+</html>

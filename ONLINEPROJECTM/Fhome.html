@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Linking the CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom CSS for equal button size */
+        .nav-link {
+            width: 200px; /* Set a fixed width for all buttons */
+            height: 100px; /* Set a fixed height for all buttons */
+            padding: 10px; /* Adjust padding as needed */
+            display: flex; /* Use flexbox to center content vertically */
+            flex-direction: column; /* Align content vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text horizontally */
+        }
+        .nav-link img {
+            max-width: 70%; /* Limit the maximum width of the image */
+            max-height: 70%; /* Limit the maximum height of the image */
+            height: auto; /* Maintain aspect ratio */
+            width: auto; /* Ensure the image fits within the button */
+        }
+
+        /* Custom background color for navbar */
+        .navbar-custom {
+            background-color: rgb(50, 35, 152); /* Set the background color */
+        }
+        body{
+            background-color: #9f9999;
+            margin: 0;
+            padding: 0;
+             background-image: url("713.jpg");
+             background-size: cover;
+            
+             background-blend-mode:soft-light;
+            
+           }
+        h1 {
+            color: rgb(50, 35, 152); /* Change to your desired color using hex, rgb, or color name */
+            text-align: center; /* Center the text horizontally */
+            margin-top: 50px; /* Adjust top margin as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">COMPREHENSIVE ONLINE EXAM</h1>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container-fluid">
+            <ul class="navbar-nav w-100 d-flex justify-content-around">
+                <li class="nav-item">
+                    <button class="nav-link addquestion-btn" onclick="addQuestion()">
+                        <img src="add new question.jpeg" alt="Add New Question">
+                        Add Question
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link allque-btn" onclick="allQuestion()">
+                        <img src="allq.jpeg" alt="All Question" style="width: 70px; height: 70px;">
+                        All Question
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link allstudresult-btn" onclick="studentResult()">
+                        <img src="all student result.jpeg" alt="All Student Result">
+                         Result
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link create-exam-btn" onclick="createExam()">
+                        <img src="7672580.png" alt="Create Exam">
+                        Create Exam
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link logout-btn" onclick="logout()">
+                        <img src="logout.jpeg" alt="Logout">
+                        Logout
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Extract facultyId from URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const facultyId = urlParams.get('facultyId');
+
+if (!facultyId) {
+    console.error('Faculty ID not found in URL.');
+}
+
+// Example JavaScript in login.html or any other HTML page
+function addQuestion() {
+    if (facultyId) {
+        window.location.href = `add_qstn.html?facultyId=${facultyId}`;
+    } else {
+        console.error('Faculty ID not found.');
+    }
+}
+
+// Other navigation functions with facultyId in the URL
+function allQuestion() {
+    if (facultyId) {
+        window.location.href = `all_qstn.html?facultyId=${facultyId}`;
+    } else {
+        console.error('Faculty ID not found.');
+    }
+}
+
+function createExam() {
+    if (facultyId) {
+        window.location.href = `facexm.html?facultyId=${facultyId}`;
+    } else {
+        console.error('Faculty ID not found.');
+    }
+}
+
+function studentResult() {
+    if (facultyId) {
+        window.location.href = `facresult.html?facultyId=${facultyId}`;
+    } else {
+        console.error('Faculty ID not found.');
+    }
+}
+
+function deleteQuestionPage() {
+    if (facultyId) {
+        window.location.href = `dlt_qstn.html?facultyId=${facultyId}`;
+    } else {
+        console.error('Faculty ID not found.');
+    }
+}
+
+function logout() {
+            $.get('/logout', function(response) {
+                window.location.href = '/';
+            }).fail(function() {
+                console.error('Logout failed.');
+            });
+        }
+    </script> 
+    <script src="server.js"></script>
+</body>
+</html>

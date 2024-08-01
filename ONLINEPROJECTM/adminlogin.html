@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>course coordinator login</title>
+  <link rel="stylesheet" type="text/css" href="/adlogin.css">
+</head>
+<body>
+  <div class="container-outer">
+    <div class="container-left">
+      <!-- Optional content for the left container -->
+    </div>
+    <div class="container-right">
+      <h1>COURSE COORDINATOR LOGIN PAGE</h1>
+      <form action="/login" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="/adsignup.html">Sign Up</a></p>
+      <p id="errorMessage" class="error-message"></p>
+    </div>
+  </div>
+  <script src="adlogin.js"></script>
+</body>
+</html>

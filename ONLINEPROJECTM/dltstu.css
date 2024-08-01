@@ -1,0 +1,102 @@
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: #9f9999;
+  background-image: url("713.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
+}
+
+.taskbar {
+  width: 200px;
+  background-color: rgb(50, 35, 152);;
+  color: #0a5b91;
+  padding-top: 20px;
+}
+
+.taskbar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.taskbar li {
+  padding: 10px;
+}
+
+.taskbar a {
+  color: #fff;
+  font-size: 1.3rem;
+  text-decoration: none;
+  display: block;
+}
+
+.taskbar a:hover {
+  background-color: #333;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #0663a6;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #1198ba;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Styles for search results table */
+#searchResults {
+  margin-top: 20px;
+}
+
+#searchResults table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#searchResults th,
+#searchResults td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#searchResults th {
+  background-color: #f2f2f2;
+}

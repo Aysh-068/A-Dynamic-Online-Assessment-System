@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results View</title>
+    <link rel="stylesheet" href="resultview.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Results</h1>
+        <form id="resultForm">
+            <label for="studentId">Student ID:</label>
+            <input type="text" id="studentId" name="studentId" required>
+            <label for="semester">Semester:</label>
+            <input type="text" id="semester" name="semester" required>
+            <button type="submit">Fetch Results</button>
+        </form>
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+    <script src="resultview.js"></script>
+</body>
+</html>

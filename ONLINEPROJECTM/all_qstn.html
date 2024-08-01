@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL QUESTIONS</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: rgb(50, 35, 152); /* Set background color for table header */
+      color: white; /* Set text color for table header */
+    }
+    body {
+      background-color: #9f9999;
+      margin: 0;
+      padding: 0;
+      background-image: url("713.jpg");
+      background-size: cover;
+      background-blend-mode: soft-light;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Question Bank</h2>
+<p>Total Questions: <span id="questionCount">0</span></p> <!-- Element to display total number of questions -->
+
+<table id="qstnTable">
+  <thead>
+    <tr>
+      <th>Question ID</th>
+      <th>Question</th>
+      <th>Option 1</th>
+      <th>Option 2</th>
+      <th>Option 3</th>
+      <th>Option 4</th>
+      <th>Action</th> <!-- New column for Delete action -->
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Data rows will be inserted here -->
+  </tbody>
+</table>
+
+<script>
+  // Function to fetch and populate the table with questions
+  function fetchAndPopulateQuestions() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const facultyId = urlParams.get('facultyId'); // Retrieve facultyId from URL
+    console.log('Faculty ID from URL:', facultyId); // Log facultyId
+
+    fetch(`/qstn_banks?facultyId=${facultyId}`)
+      .then(response => {
+        console.log('Received response:', response); // Log response
+        if (!response.ok) {
+          throw new Error('Failed to fetch questions');
+        }
+        return response.json();
+      })
+      .then(questions => {
+        console.log('Received questions:', questions); // Log received questions
+        populateTable(questions);
+      })
+      .catch(error => {
+        console.error('Error fetching questions:', error);
+        // Optionally, display an error message to the user
+      });
+  }
+
+  // Function to populate the table with fetched questions
+  function populateTable(questions) {
+    const tableBody = document.querySelector('#qstnTable tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    questions.forEach(question => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${question.qstn_id}</td>
+        <td>${question.qstn}</td>
+        <td>${question.op1}</td>
+        <td>${question.op2}</td>
+        <td>${question.op3}</td>
+        <td>${question.op4}</td>
+        <td><button onclick="deleteQuestion(${question.qstn_id})">Delete</button></td>
+      `;
+      tableBody.appendChild(row);
+    });
+
+    // Update total question count
+    document.getElementById('questionCount').textContent = questions.length;
+  }
+// Extract faculty_id from URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const facultyId = urlParams.get('facultyId');
+
+function deleteQuestion(questionId) {
+    if (!facultyId) {
+        console.error('Faculty ID not found.');
+        return;
+    }
+
+    fetch(`/deleteQuestion`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ questionId, facultyId })  // Ensure both IDs are passed correctly
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert('Question deleted successfully');
+            // Optionally, refresh the table or UI after deletion
+            fetchAndPopulateQuestions(); // Example function to fetch updated data
+        }
+    })
+    .catch(error => console.error('Error deleting question:', error));
+}
+
+// Initial fetch and populate when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    fetchAndPopulateQuestions(); // Fetch questions on page load
+});
+
+</script>
+
+</body>
+</html>

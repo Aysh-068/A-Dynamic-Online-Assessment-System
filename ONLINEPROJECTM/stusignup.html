@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Signup</title>
+  <link rel="stylesheet" type="text/css" href="/stusignup.css">
+</head>
+<body>
+  <div class="container-outer">
+    <div class="container-left">
+      <h1>Online Exam System</h1>
+    </div>
+    <div class="container-right">
+      <h1>Student Sign Up</h1>
+      <form id="signupForm" action="/stusignup" method="post">
+        <label for="std_id">Register Number:</label>
+        <input type="text" name="std_id" id="std_id" required>
+        <br>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="stdept">Department:</label>
+        <select name="stdept" id="stdept" required>
+          <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+          <option value="Information Technology">Information Technology</option>
+        </select>
+        <br>
+        <label for="stclass">Class:</label>
+        <select name="stclass" id="stclass" required>
+          <option value="CSA">CSA</option>
+          <option value="CSB">CSB</option>
+          <option value="IT">IT</option>
+        </select>
+        <br>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" name="confirmPassword" id="confirm-password" required>
+        <br>
+        <label for="stemail">Email:</label>
+        <input type="email" name="stemail" id="stemail" required>
+        <br>
+        <button type="submit">Signup</button>
+        <p>Already have an account? <a href="stulogin.html">Log in</a></p>
+      </form>
+    </div>
+  </div>
+  <script src="/stusignup.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+/* Add your CSS styles here */
+body {
+  font-family: Arial, sans-serif;
+   
+  background-color: #9f9999;
+  background-image: url("713.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
+
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+#questionsContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+#submitButtonContainer {
+  text-align: center; /* Center elements horizontally within the container */
+  position: fixed; /* Make the container fixed at the bottom */
+  bottom: 10px; /* Set bottom position from the bottom edge */
+  left: 0; /* Set left position to 0 to occupy full width */
+  right: 0; /* Set right position to 0 to occupy full width */
+}
+
+#submitBtn {
+  background-color: #0f34c7; /* Green background */
+  color: white; /* White text */
+  padding: 15px 32px; /* Padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Display inline-block */
+  font-size: 16px; /* Font size */
+  margin: 4px 2px; /* Margin */
+  cursor: pointer; /* Pointer cursor on hover */
+  border: none; /* Remove border */
+  border-radius: 12px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+#submitBtn:hover {
+  background-color: #0787d6; /* Darker green on hover */
+}
+
+#timer {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: right;
+  position: fixed; /* Make the timer fixed on the screen */
+  top: 10px; /* Set top position from the top edge */
+  right: 10px; /* Set right position from the right edge */
+  color: red;
+}
+
+/* Add styles for the warning box */
+.warning-box {
+  background-color: #f0ad4e; /* Yellow color for warning */
+  color: #333;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  position: fixed; /* Position the box at a specific location (optional) */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the box horizontally and vertically (optional) */
+  z-index: 999; /* Ensure the warning box appears on top of other elements */
+}
+
+.success-window {
+  position: fixed; /* Keep the window positioned in the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the window horizontally and vertically */
+  background-color: #f0f9fa; /* Light background color */
+  border: 1px solid #ccc; /* Border for the window */
+  padding: 20px; /* Padding for content */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+  font-family: sans-serif; /* Default font family */
+  font-size: 16px; /* Font size */
+  text-align: center; /* Center the text content */
+  z-index: 10; /* Ensure the window appears on top of other elements */
+}
+
+.success-window::before {
+  /* Optional decoration for the top of the window */
+  content: "";
+  position: absolute;
+  top: -10px; /* Position above the window */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #f0f9fa; /* Color matches window background */
+}
+
+/* Existing styles */
+
+#studentInfo {
+  /* Style the container element for student ID and class */
+  text-align: center; /* Center elements horizontally within the container */
+  margin: 0 auto; /* Center the container horizontally within the form */
+  padding: 10px; /* Add some padding for better alignment */
+}
+
+/* Center the initial container for student ID and class */
+#studentInfoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+#studentInfoForm {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#studentInfoForm label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+#studentInfoForm input {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#studentInfoForm button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#studentInfoForm button:hover {
+  background-color: #0056b3;
+}

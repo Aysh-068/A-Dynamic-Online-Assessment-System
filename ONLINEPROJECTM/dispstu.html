@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display Student</title>
+  <link rel="stylesheet" href="searchstu.css">
+</head>
+<body>
+  <div class="container">
+    <div class="taskbar">
+      <ul>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Search</a>
+          <div class="dropdown-content">
+             <a href="searchfac.html">Search Faculty by Name</a>
+             <a href="searchfacbydept.html">Search Faculty by Department</a>
+             <a href="searchstu.html">Search Student by Name</a>
+             <a href="searchstubyclass.html">Search Student by Class</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Delete</a>
+          <div class="dropdown-content">
+            <a href="dltfac.html">Delete Faculty</a>
+            <a href="dltstu.html">Delete Student</a>
+          </div>
+        </li>
+        <li class="dropdown"><a href="#"class="dropbtn">Display</a>
+         <div class="dropdown-content">
+            <a href="dispfac.html">Display Faculty</a>
+            <a href="dispstu.html">Display Student</a>
+          </div>
+          <li>
+        <li>
+          <a href="result.html" class="publish-btn">Publish Result</a>
+        </li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <h1>Display Students</h1>
+      <div id="searchResults">
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Class</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="dispstu.js"></script>
+</body>
+</html>

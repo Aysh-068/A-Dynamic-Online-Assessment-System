@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- saved from url=(0260)https://fledge.us.criteo.com/interest-group?data=ELDOMXxUQlpmVktGN2IxT0RTenNINkFPK3ZwU1ZwVzhqZHNlOC8rcS9LUVdPS3ljeVZIY1QzNzQ2K3NCaXoyVFpjemRpNW5SSVpHWmYvRkJjVDFRYTRhdEJHUU9WTHpiRjR4R3V4VHY3eU1EaTJZV1NGUXorRnRQc3NjTHlteVhOOC9PQ2RRT1FoUW1EYk5UejkvWjVWbnVLMHc9PXw -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <!-- Chrome origin trial token -->
+    <meta http-equiv="origin-trial" content="AnolOEEMEnMaCvmUcw/eijaA/Ntx4pke43TW8O1+XFxTL7yMSzmBnkPrjQ33sKmqvREEpLQOE72gUMzHLu9KiAoAAABseyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY5NTE2Nzk5OSwiaXNTdWJkb21haW4iOnRydWV9">
+</head>
+<body>
+
+<script>
+    function getBswIg(src) {
+        const elt = document.createElement("iframe");
+        elt.allow = "join-ad-interest-group";
+        elt.width = "0";
+        elt.height = "0";
+        elt.style.display = "none";
+        elt.title = "BSW IG";
+        elt.src = src;
+
+        document.body.appendChild(elt);
+    }
+
+    if (!navigator.joinAdInterestGroup) {
+        console.log("No fledge for you!");
+    } else {
+        var igs = [{"owner":"https://fledge.us.criteo.com","name":"W16Pcnw2MFJRaUFaZDNwVC84SUR5dElxaitnPT18","lifetimeMs":2592000000,"priorityVector":{"browserSignals.ageInMinutes":-1,"browserSignals.one":-86400},"biddingLogicURL":"https://fledge.us.criteo.com/simplebid?platform=us","biddingWasmHelperURL":"https://fledge.us.criteo.com/criteo.wasm","trustedBiddingSignalsURL":"https://fledge.us.criteo.com/getvalues","trustedBiddingSignalsKeys":["6wRNjHxoaTBtMmE5cHFxUUtrVnY3UEZnTFl5bVVCc08vbEF0OEQ4VlZ0SS9Ob1BDS01XYko3aVh1UXBNa2I0R0RzRWdCUERuRUV1bnBxM3JHemR4Y25kOVMxbkFScXpHV2pjYnBRZ2E1MkVEa2RkTT18"],"maxTrustedBiddingSignalsURLLength":32768,"userBiddingSignals":{},"updateURL":"https://fledge.us.criteo.com/interest-group/update?key=c8_PFHxpbUJPMEZGSWRlOVdJcjM0cHl6dnFVSG5QaHlrcDIxOFhibDd5aHdrcmF3QUFmbmJJaGJQT29uM0tsSUZ3bFRYWS9td3l5RHFBNXZmWVg4cUFXWmF1S0xpYlcrNlRDci83ZnZ3Q2M2YmJUQT18","ads":[],"adComponents":[],"trustedBiddingSignalsSlotSizeMode":"slot-size","executionMode":"group-by-origin","sellerCapabilities":{"*":["interest-group-counts","latency-stats"]}}];
+        var expiration = 2592000;
+        var errorEndpoint = "https://fledge.us.criteo.com/interest-group/error?pid=36026";
+        if (navigator.joinAdInterestGroup.length == 1) {
+            for (const ig of igs) {
+                navigator.joinAdInterestGroup(ig).catch((e) => fetch(`${errorEndpoint}&message=${encodeError(e)}`));
+            }
+        } else {
+            // This is for backwards-compatibility
+            // The 1 - arg implementation is future - proof
+            for (const ig of igs) {
+                navigator.joinAdInterestGroup(ig, expiration).catch((e) => fetch(`${errorEndpoint}&message=${encodeError(e)}`));
+            }
+        }
+        if (false) {
+            getBswIg("https://dsp-paapi-sandbox.bsw-ig.criteo.com/paapi/dsp/html/index");
+            getBswIg("https://paa-proxy-dsp.bsw-sb.criteo.com/paapi/paa-proxy/dsp/html/index/bsw-sb-ig-paa-proxy");
+        }
+
+        if (false) {
+            callAuction();
+        }
+    }
+
+    function encodeError(error) {
+        return encodeURIComponent(error.name + ':' + error.message);
+    }
+
+    async function callAuction() {
+        const owner = "https://fledge.us.criteo.com";
+
+        const sellerJsUrl = `${owner}/interest-group/seller-js`;
+        const response = await fetch(`${owner}/debug/test-signals?egid=11111`);
+        const pbs = await response.json();
+
+        const componentAuctionConf = {
+            seller: owner,
+            decisionLogicURL: sellerJsUrl,
+            interestGroupBuyers: [owner],
+            perBuyerSignals: pbs,
+            perBuyerCumulativeTimeouts: {[owner]: 4000},
+            perBuyerExperimentGroupIds: {[owner]: 11111},
+            reportingTimeout: 5000 // max possible timeout (default 50)
+        };
+
+        const topAuctionConf = {
+            seller: owner,
+            decisionLogicURL: sellerJsUrl,
+            componentAuctions: [componentAuctionConf]
+        };
+
+        const result = await navigator.runAdAuction(topAuctionConf);
+    }
+
+    async function measureAudienceSize() {
+        // Measuring audience size
+        // Register worklet
+        if((!window?.sharedStorage?.worklet?.addModule) || (!window?.sharedStorage?.run)){
+            return;
+        }
+        await window.sharedStorage.worklet.addModule('');
+
+        // Run audience size measurement operation
+        await window.sharedStorage.run('audience-size-measurement', {
+            data: { bucketKey: BigInt('1152836'), contributionValue: 8192}
+        });
+    }
+
+    //TODO reactivate audience-size-measurement
+    //measureAudienceSize();
+
+</script>
+
+
+</body></html>

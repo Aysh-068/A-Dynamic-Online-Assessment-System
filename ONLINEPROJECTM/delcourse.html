@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Course</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom CSS if needed */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Delete Course</h1>
+        <form action="/delete_course" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="course_id">Course ID:</label>
+                <input type="text" id="course_id" name="course_id" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-danger">Delete Course</button>
+        </form>
+    </div>
+</body>
+</html>
